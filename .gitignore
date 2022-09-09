@@ -1,2 +1,3 @@
 /server/node_modules
 /client/devcube/node_modules
+server/.env
