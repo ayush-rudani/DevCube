@@ -12,3 +12,6 @@ To access .env's environment variable in our code we need to do it with help of 
 `dontenv` package that loads environment variables from .env file into the process.env object availabe to us globally in a node js environment 
 
 So to use it, you can access using `process.env.<variable>`
+
+
+- mongoose allowsus create models and schemas for our data in DB. MongoDB alone is schema less 
