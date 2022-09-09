@@ -1,5 +1,8 @@
 # DevCube
 
+
+
+## Environment Variable
 If we wanted to store any constants like PORT, Database URL in an environment variable so sensitive information 
 like this advisible to store in enviromnet variable using .env file
 Don't forgot ad this dile in .gitignore
