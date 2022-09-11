@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-const Schema = new mongoose.Schema();
+const Schema = mongoose.Schema;
 
-// Here we have defined a schema(structure of perticular document) for our user model. all the properties that we required for each user document. 
+// Here we have defined a schema(structure of perticular document) for our user model. all the properties that we required for each user document.
 // Model is a class with which we construct documents. In this case, each document will be a user with properties and behaviors as declared in our schema.
 
 const userSchema = new Schema({
@@ -12,7 +12,7 @@ const userSchema = new Schema({
     password: { type: String, required: true, minlength: 6 },
 
     // Basic Information about user     -----------------
-    Bio: { type: String, required: false },
+    bio: { type: String, required: false },
     website: { type: String, required: false },
     // location: { type: String, required: false },
 
@@ -28,8 +28,6 @@ const userSchema = new Schema({
     // Work     ------------------
     // work: { type: String, required: false },
     // education: { type: String, required: false },
-
 });
 
-module.exports = mongoose.model('User', userSchema);
-
+module.exports = mongoose.model("User", userSchema);
