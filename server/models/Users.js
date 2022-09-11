@@ -5,6 +5,14 @@ const Schema = mongoose.Schema;
 // Here we have defined a schema(structure of perticular document) for our user model. all the properties that we required for each user document.
 // Model is a class with which we construct documents. In this case, each document will be a user with properties and behaviors as declared in our schema.
 
+/* Sample JSON Object
+    {
+        "name" : "John Doe",
+        "email" : "jd@gmail.com",
+        "username" : "johndoe",
+        "password" : "123456",
+    }
+*/
 const userSchema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
