@@ -1,10 +1,11 @@
 const express = require("express");
 require("dotenv").config();
 const connectDB = require("./config/db");
-const router = require("./routes/user-routes");
+const userR = require("./routes/user-routes");  //userRouter
+const postR = require("./routes/post-routes");  //postRouter
 const app = express();
 const port = process.env.PORT || 5000;
-app.use(express.json());
+
 
 // app.use((req, res, next) => {
 //   res.header("Access-Control-Allow-Origin", "*");
@@ -19,11 +20,12 @@ app.use(express.json());
 //   res.send("Welcome to Express");
 // });
 
-app.use("/api/user", router)
+app.use(express.json());
+app.use("/api/user", userR);
+app.use("/api/post", postR);
 
 // Connect DataBase
 connectDB();
-
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${port}`);
