@@ -18,7 +18,7 @@ So to use it, you can access using `process.env.<variable>`
 
 
 
-# mern-starter
+# Mern-Starter
 
 ### Guide To Initialize New Project
 
