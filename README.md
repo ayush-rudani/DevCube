@@ -14,7 +14,7 @@ To access .env's environment variable in our code we need to do it with help of 
 So to use it, you can access using `process.env.<variable>`
 
 
-- mongoose allowsus create models and schemas for our data in DB. MongoDB alone is schema less 
+- mongoose allows us create models and schemas for our data in DB. MongoDB alone is schema less 
 
 
 
