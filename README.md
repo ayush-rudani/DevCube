@@ -51,14 +51,13 @@ So to use it, you can access using `process.env.<variable>`
 - Now run `node index`
 - check the website `http://localhost:8082`. It will display `Hello World!`.
 - Now Change `package.json` Of the Scripts part.
-	```js
+	```json
 	"main": "index.js",
 	  "scripts": {
 	    "start": "node index.js",
 	    "app": "nodemon index.js",
 	    "test": "echo \"Error: no test specified\" && exit 1"
-	  },
-	  ```
+	  }
 - Now `npm install` & run `npm run app` and check the URL again.
 
 #### Mongo Database Setup
