@@ -46,6 +46,21 @@ const updatePost = async (req, res, nxt) => {
     return res.satus(200).json({ message: "Post updated successfully", post });
 }
 
+const deletePost = async (req, res, nxt) => {
+    const id = req.params.id;
+    let post;
+    try {
+        post = await Post.findByIdAndDelete(id);
+    }
+    catch (err) {
+        console.log(err);
+    }
+    if (!post) {
+        res.status(400).json({ message: "Post not found" });
+    }
+    return res.status(200).json({ message: "Post deleted successfully" });
+}
+
 module.exports = {
     getAllPost, createPost, updatePost
 };
