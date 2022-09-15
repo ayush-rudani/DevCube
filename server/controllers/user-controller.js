@@ -79,4 +79,16 @@ const login = async (req, res, nxt) => {
     // return res.status(200).json({ message: 'Logged in' });
 }
 
+// const updateuser = async (req,res,next) => {
+//   let existingUser;
+//   try {
+//         existingUser = await User.findOne({ email: email });
+//   }catch (err) {
+//         return console.log(err);
+//   }
+//   if (!existingUser) {
+//         return res.status(404).json({ message: 'User not found' });
+//     }
+// }
+
 module.exports = { getAllUser, signup, login };
