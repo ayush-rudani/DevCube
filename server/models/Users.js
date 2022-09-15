@@ -26,17 +26,18 @@ const userSchema = new Schema({
     // location: { type: String, required: false },
 
     // Social Media Links   ----------
-    // twitter: { type: String, required: false },
-    // linkedin: { type: String, required: false },
-    // github: { type: String, required: false },
+    twitter: { type: String, required: false },
+    linkedin: { type: String, required: false },
+    github: { type: String, required: false },
 
     // Coidng   ---------------
-    // skills: { type: [String], required: false },
-    // status: { type: String, required: false },
+    skills: { type: [String], required: false },
+    status: { type: String, required: false },
 
     // Work     ------------------
-    // work: { type: String, required: false },
-    // education: { type: String, required: false },
+    work: { type: String, required: false },
+    education: { type: String, required: false },
+  
 });
 
 module.exports = mongoose.model("User", userSchema);
