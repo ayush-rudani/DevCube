@@ -5,8 +5,7 @@ const getAllUser = async (req, res, nxt) => {
     let users;
     try {
         users = await User.find();
-    }
-    catch (err) {
+    } catch (err) {
         condole.log(err);
     }
     if (!users) {
@@ -22,8 +21,7 @@ const signup = async (req, res, nxt) => {
     let existingUser;
     try {
         existingUser = await User.findOne({ email: email });
-    }
-    catch (err) {
+    } catch (err) {
         console.log(err);
     }
     if (existingUser) {
@@ -33,8 +31,7 @@ const signup = async (req, res, nxt) => {
     let hashedPassword
     try {
         hashedPassword = await bcrypt.hash(password, 12);
-    }
-    catch (err) {
+    } catch (err) {
         console.log(err);
     }
     const newUser = new User({
@@ -46,8 +43,7 @@ const signup = async (req, res, nxt) => {
     });
     try {
         await newUser.save();
-    }
-    catch (err) {
+    } catch (err) {
         console.log(err);
     }
     return res.status(201).json({ user: newUser, message: 'User created successfully' });
@@ -61,8 +57,7 @@ const login = async (req, res, nxt) => {
     try {
         existingUser = await User.findOne({ email: email });
         console.log(existingUser);
-    }
-    catch (err) {
+    } catch (err) {
         return console.log(err);
     }
     if (!existingUser) {
