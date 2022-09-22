@@ -12,6 +12,13 @@ const getCommentByPostId = async (req, res, next) => {
     console.log(err);
     return res.status(500).json({ message: "Fetching comments failed. Pelase try again later", error: err });
   }
+  if (!comments || comments.length == 0) {
+    return res.status ? (200).json({ message: 'No comments for the post' });
+  }
+  res.json({ comments: comments.map((comment) => comment.toObject({ getters: true })), });
+}
 
+module.exports = {
+  getCommentByPostId
 }
 
