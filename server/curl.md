@@ -1,0 +1,1 @@
+`curl https://devcube.ayushrudani.repl.co/api/user | json_pp`
