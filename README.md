@@ -17,6 +17,14 @@ So to use it, you can access using `process.env.<variable>`
 - mongoose allows us create models and schemas for our data in DB. MongoDB alone is schema less 
 
 
+<br>
+
+## Miscellaneous
+
+What is `.populate()` -> https://stackoverflow.com/questions/38051977/what-does-populate-in-mongoose-mean
+
+<br>
+
 
 # Mern-Starter
 

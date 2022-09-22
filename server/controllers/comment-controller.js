@@ -18,6 +18,8 @@ const getCommentByPostId = async (req, res, next) => {
   res.json({ comments: comments.map((comment) => comment.toObject({ getters: true })), });
 }
 
+
+
 module.exports = {
   getCommentByPostId
 }
