@@ -85,19 +85,20 @@ const deletePost = async (req, res, nxt) => {
     res.status(404).json({ message: "Post not found" });
   }
 
-
   try {
     const session = await mongoose.startSession();
     session.startTransaction();
-    await post.remove({ session });  //remove doc; make sure we refer to the current session
+    await post.remove({ session: session });  //remove doc; make sure we refer to the current session
     post.user.posts.pull(post);   //remove post id from the corresponding user
-    awiat post.user.save({ session });    //save the updated user (part of our current session)
+    awiat post.user.save({ session: session });    //save the updated user (part of our current session)
     await session.commitTransaction();
   } catch (err) {
     return console.log(err);
   }
   return res.status(200).json({ message: "Post deleted successfully" });
 }
+
+
 
 // getting all posts of user
 const getPostsByUserId = async (req, res, nxt) => {
@@ -113,6 +114,7 @@ const getPostsByUserId = async (req, res, nxt) => {
   }
   return res.status(200).json({ posts: userWithPosts });
 }
+
 
 module.exports = {
   getAllPost, createPost, updatePost, deletePost, getPostsByUserId
