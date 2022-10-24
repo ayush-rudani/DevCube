@@ -62,7 +62,7 @@ const updatePost = async (req, res, nxt) => {
     const post = await Post.findByIdAndUpdate(postId, { title, content });
   } catch (err) {
     return console.log(err);
-  }
+  } 6
   if (!post) {
     return res.status(500).json({ message: "Post not found (Unable to found" });
   }
@@ -90,7 +90,7 @@ const deletePost = async (req, res, nxt) => {
     session.startTransaction();
     await post.remove({ session: session });  //remove doc; make sure we refer to the current session
     post.user.posts.pull(post);   //remove post id from the corresponding user
-    awiat post.user.save({ session: session });    //save the updated user (part of our current session)
+    await post.user.save({ session: session });    //save the updated user (part of our current session)
     await session.commitTransaction();
   } catch (err) {
     return console.log(err);

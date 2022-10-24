@@ -9,4 +9,5 @@ router.delete('/del/:id', postC.deletePost);
 router.get('/user/:id', postC.getPostsByUserId);
 
 
+
 module.exports = router;

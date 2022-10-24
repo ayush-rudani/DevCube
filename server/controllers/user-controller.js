@@ -1,5 +1,6 @@
 const User = require('../models/Users.js');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 // app.use("/api/user", userR);
 const getAllUser = async (req, res, nxt) => {
     let users;
@@ -46,7 +47,7 @@ const signup = async (req, res, nxt) => {
     } catch (err) {
         console.log(err);
     }
-    return res.status(201).json({ user: newUser, message: 'User created successfully' });
+    return res.status(201).json({ _id: newUser.id, user: newUser, token: generateToken(newUser._id), message: 'User created successfully' });
 }
 
 
@@ -73,7 +74,7 @@ const login = async (req, res, nxt) => {
     } catch (err) {
         return console.log(err);
     }
-    res.status(200).json({ message: 'Logged in' });
+    res.status(200).json({ message: 'Logged in', _id: existingUser.id, token: generateToken(existingUser._id) });
 
 
     // const isValidPassword = await bcrypt.compare(password, existingUser.password);
@@ -111,4 +112,17 @@ const login = async (req, res, nxt) => {
 //     }
 // }
 
-module.exports = { getAllUser, signup, login };
+
+const getMe = async (req, res, next) => {
+    // res.status(200).json("User data display");
+    const { _id, name, email } = await User.findById(req.userId);
+    res.status(200).json({ id: _id, name, email });
+    next()
+}
+
+// Generate a token
+const generateToken = (userId) => {
+    return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '30d' });
+};
+
+module.exports = { getAllUser, signup, login, getMe };
