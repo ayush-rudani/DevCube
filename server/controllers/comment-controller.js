@@ -92,6 +92,7 @@ const createComment = async (req, res, next) => {
   res.status(201).json({ comment: createdComment.toObject({ getters: true }) });
 }
 
+
 // ******************************************************
 
 const updateComment = async (req, res, next) => {
@@ -117,7 +118,6 @@ const updateComment = async (req, res, next) => {
   } catch (err) {
     return next(new HttpError('Could not update comment', 500));
   }
-
 }
 
 
