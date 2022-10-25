@@ -13,7 +13,8 @@ const getCommentByPostId = async (req, res, next) => {
   const { postId } = req.params;
   let comments;
   try {
-    await Comment.find({ post: postId }).populate('author');
+    // comments = await Comment.find({ post: postId }).populate('author');
+    comments = await Comment.find({ post: postId });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Fetching comments failed. Pelase try again later", error: err });
@@ -93,9 +94,35 @@ const createComment = async (req, res, next) => {
 
 // ******************************************************
 
+const updateComment = async (req, res, next) => {
+  const { commentId } = req.params;
+  let comment;
+  try {
+    comment = await Comment.findById(commentId).populate('author');
+  } catch (err) {
+    return next(new HttpError('Could not update comment, please try again!', 500));
+  }
+
+  if (comment.author.id !== req.body.author) {
+    return next(new HttpError('You are not allowed to update the comment', 401));
+  }
+
+  comment.body = req.body.body;
+
+  try {
+    await comment.save();
+    res.status(200).json({
+      comment: comment.toObject({ getters: true })
+    });
+  } catch (err) {
+    return next(new HttpError('Could not update comment', 500));
+  }
+
+}
+
 
 
 module.exports = {
-  getCommentByPostId, createComment
+  getCommentByPostId, createComment, updateComment
 }
 
