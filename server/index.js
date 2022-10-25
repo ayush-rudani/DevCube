@@ -3,6 +3,7 @@ require("dotenv").config();
 const connectDB = require("./config/db");
 const userR = require("./routes/user-routes");  //userRouter
 const postR = require("./routes/post-routes");  //postRouter
+const commentR = require("./routes/comment-routes");  //commentRouter
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
 })
 app.use("/api/user", userR);
 app.use("/api/post", postR);
+app.use("/api/comment", commentR);
 
 // Connect DataBase
 connectDB();

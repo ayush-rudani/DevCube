@@ -8,7 +8,7 @@ const postSchema = new Schema({
     date: { type: Date, default: Date.now },
 
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    // comments: [{ type: Schema.Types.ObjectId, ref: 'Comment', reqired: true }],
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment', reqired: true }],
 });
 
 module.exports = mongoose.model("Post", postSchema);

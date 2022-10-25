@@ -18,8 +18,9 @@ const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true, minlength: 6 },
-    
-    posts : [{type: mongoose.Types.ObjectId, ref: 'Post' }],
+
+    posts: [{ type: mongoose.Types.ObjectId, ref: 'Post' }],
+    comments: [{ type: mongoose.Types.ObjectId, ref: 'Comment' }],
 
     // Basic Information about user     -----------------
     bio: { type: String, required: false },
@@ -38,7 +39,7 @@ const userSchema = new Schema({
     // Work     ------------------
     work: { type: String, required: false },
     education: { type: String, required: false },
-  
+
 });
 
 module.exports = mongoose.model("User", userSchema);
