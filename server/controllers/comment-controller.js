@@ -120,8 +120,6 @@ const updateComment = async (req, res, next) => {
   }
 }
 
-
-
 module.exports = {
   getCommentByPostId, createComment, updateComment
 }
