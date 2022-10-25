@@ -7,10 +7,9 @@ import Nav from './components/Nav.js';
 function App() {
   return (
     <div className="App">
-
       {/* <Navbar /> */}
       {/* <MDEditor /> */}
-      <Nav />
+      <Navbar />
 
     </div >
   );

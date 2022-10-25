@@ -37,6 +37,7 @@ const createComment = async (req, res, next) => {
   }
 
   const { parentPost, body, author, date, parentC, userId } = req.body;
+
   let post;
   try {
     post = await Post.findById(parentPost); // check if the post ID exists
@@ -73,7 +74,7 @@ const createComment = async (req, res, next) => {
     const sess = await mongoose.startSession();
     sess.startTransaction();
 
-    createComment = await Comment.populate(createdComment, { path: 'author' });
+    createdComment = await Comment.populate(createdComment, { path: 'author' });
     post.comments.push(createdComment);
     user.comments.push(createdComment);
 

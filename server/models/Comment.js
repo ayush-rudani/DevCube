@@ -8,8 +8,4 @@ const commentSchema = new Schema({
   parentC: { type: Schema.Types.ObjectId, ref: 'Comment', default: null }, // ParentId  // ParentComment
   author: { type: Schema.Types.ObjectId, ref: 'User', required: true }, // author
 });
-
-
-
-
 module.exports = mongoose.model("Comment", commentSchema);
