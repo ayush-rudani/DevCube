@@ -1,7 +1,11 @@
-import 
+import { Helmet } from "react-helmet";
 
 const Home = () => {
-    return (<h1>Home Page</h1>)
+    return (
+        <>
+            <Helmet><title>DevCube Home</title></Helmet>
+        </>
+    );
 }
 
 export default Home;

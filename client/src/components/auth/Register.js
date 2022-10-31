@@ -1,7 +1,10 @@
 import BgImage from "./BgImage";
+import { Helmet } from "react-helmet";
+
 function Register() {
     return (
         <>
+            <Helmet><title>Register</title></Helmet>
             <div className="row mt-80">
                 <div className="col-8"><BgImage /></div>
                 <div className="col-4">
