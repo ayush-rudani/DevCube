@@ -1,6 +1,16 @@
 const User = require('../models/Users.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
+
+// module.exports.registerValiations = [
+//   body('name').not().isEmpty().trim().withMessage('Name is required'),
+//   body('email').not().isEmpty().trim().withMessage('Email is required'),
+//   body('password')
+//     .isLength({ min: 6 })
+//     .withMessage('Password must be 6 characters long'),
+// ];
+
 // app.use("/api/user", userR);
 const getAllUser = async (req, res, nxt) => {
   let users;
@@ -46,6 +56,7 @@ const signup = async (req, res, nxt) => {
     await newUser.save();
   } catch (err) {
     console.log(err);
+    return res.status(500).json({ errors: err });
   }
   return res.status(201).json({ _id: newUser.id, user: newUser, token: generateToken(newUser._id), message: 'User created successfully' });
 }
