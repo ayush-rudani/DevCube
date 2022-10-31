@@ -1,4 +1,6 @@
 .bgImage {
   width: 100%;
-  background: url("images/register.png");
+  height: calc(90vh - 8rem);
+  background: url("/images/register.png");
+  background-size: cover;
 }
