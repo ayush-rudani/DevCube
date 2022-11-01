@@ -57,14 +57,14 @@ const AuthReducer = (state = initialState, action) => {
     else if (action.type === SET_TOKEN) {
         const decoded = verifyToken(action.payload);
         const { user } = decoded;
-        return { ...state, token: action.payload, user: user };
+        return { ...state, token: action.payload, user: user, loginError: [], registerError: [] };
     }
     else if (action.type === LOGOUT) {
         return { ...state, token: '', user: '' };
     }
-    // else {
-    //     return state;
-    // }
+    else if (action.type === LOGIN_ERRORS) {
+        return { ...state, loginError: action.payload, }
+    }
     return state;
 }
 

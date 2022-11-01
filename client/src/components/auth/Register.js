@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { postRegister } from '../../store/asyncMethods/AuthMethods';
 import toast, { Toaster } from 'react-hot-toast';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const Register = (props) => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [state, setState] = useState({
         name: "",
         email: "",
@@ -34,13 +34,13 @@ const Register = (props) => {
 
     useEffect(() => {
         console.log('RE', registerError);
-        if (registerError) {
-            toast.error(registerError.message);
+        if (registerError.length > 0) {
+            registerError.map(error => toast.error(error.msg));
         }
         if (user) {
             // props.history.push('/dashboard');
             // props.navigate.push('/dashboard');
-            // navigate('/dashboard');
+            navigate('/dashboard');
         }
     }, [registerError, user]);
 
@@ -48,7 +48,7 @@ const Register = (props) => {
         <>
             <Helmet><title>Register</title></Helmet>
             <div className="row mt-80">
-                <div className="col-8"><BgImage /><Toaster /></div>
+                <div className="col-8"><BgImage /><Toaster toastOptions={{ style: { fontSize: '14px', } }} /></div>
                 <div className="col-4">
                     <div className="account">
                         <div className="account__section">

@@ -15,6 +15,19 @@
   }
 }
 
+.mt-100 {
+  margin-top: 100px;
+  // @include responsive("mobile") {
+  //   margin-top: 50px;
+  // }
+  // @include responsive("tablet") {
+  //   margin-top: 50px;
+  // }
+  // @include responsive("laptop") {
+  //   margin-top: 50px;
+  // }
+}
+
 .mt-80 {
   margin-top: 8rem;
 }
@@ -64,4 +77,39 @@
   font-size: 3rem;
   font-weight: 500;
   margin-bottom: 2rem;
+}
+
+.card {
+  background: $white;
+  padding: 1.5rem;
+  &__h3 {
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+  }
+}
+label {
+  display: block;
+  font-size: 1.3rem;
+  margin-bottom: 0.4rem;
+}
+#image {
+  display: none;
+}
+.image__label {
+  display: block;
+  width: 100%;
+  padding: 1.5rem;
+  background: #b2bec3;
+  color: $white;
+  cursor: pointer;
+}
+a {
+  text-decoration: none;
+  color: $black;
+}
+.icon {
+  font-size: 2rem;
+  margin-left: 1.5rem;
+  cursor: pointer;
 }

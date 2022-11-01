@@ -3,15 +3,19 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import "./main.scss"
 import { Provider } from 'react-redux';
 import { Fragment } from 'react';
-import Home from './components/Home';
-import Register from './components/auth/Register';
-import Login from './components/auth/Login';
-import Navbar from './components/Navbar';
 import Store from './store';
-import Dashboard from './components/Dashboard';
 import PrivateRoutes from './private/PrivateRoutes';
 import RouteLinks from './private/RouteLinks';
+
 import NotFound from './components/NotFound';
+import Register from './components/auth/Register';
+import Home from './components/Home';
+import Login from './components/auth/Login';
+import Navbar from './components/Navbar';
+import Dashboard from './components/Dashboard';
+import Create from './components/Create';
+
+
 
 function App() {
   return (
@@ -31,6 +35,7 @@ function App() {
             <Route exact path="/login" element={<Login />} />
             <Route path="/" element={<PrivateRoutes />}>
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/create" element={<Create />} />
             </Route>
             <Route path='*' element={<NotFound />} />
 
