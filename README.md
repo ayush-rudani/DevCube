@@ -1,6 +1,8 @@
 # DevCube
 
-
+## Problem & Solution
+- https://stackoverflow.com/questions/69864165/error-privateroute-is-not-a-route-component-all-component-children-of-rou
+- https://stackoverflow.com/questions/66289122/how-to-create-a-protected-route
 
 ## Environment Variable
 If we wanted to store any constants like PORT, Database URL in an environment variable so sensitive information 

@@ -2,10 +2,12 @@
 
 @import "scss/abstracts/variables";
 @import "scss/abstracts/mixin";
+@import 'scss/abstracts/extends';
 
 @import "scss/components/navbar";
 @import "scss/components/bgImage";
 @import "scss/components/account";
+@import 'scss/components/notFound';
 
 @import "scss/utils/utils";
 

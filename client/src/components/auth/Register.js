@@ -12,6 +12,7 @@ const Register = (props) => {
     const [state, setState] = useState({
         name: "",
         email: "",
+        username: "",
         password: "",
     });
 
@@ -37,6 +38,7 @@ const Register = (props) => {
             toast.error(registerError.message);
         }
         if (user) {
+            // props.history.push('/dashboard');
             // props.navigate.push('/dashboard');
             // navigate('/dashboard');
         }
@@ -54,6 +56,9 @@ const Register = (props) => {
                                 <div className="group"><h3 className="form-heading">Register</h3></div>
                                 <div className="group">
                                     <input type="text" name="name" className="group__control" placeholder="Name" value={state.name} onChange={handleInputs} />
+                                </div>
+                                <div className="group">
+                                    <input type="text" name="username" className="group__control" placeholder="UserName" value={state.username} onChange={handleInputs} />
                                 </div>
                                 <div className="group">
                                     <input type="email" name="email" className="group__control" placeholder="Enter Email" value={state.email} onChange={handleInputs} />

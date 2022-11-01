@@ -5,7 +5,6 @@ function Dashboard() {
         <>
             <Helmet><title>Dashboard</title></Helmet>
             <h1>Dashboard</h1>
-            
         </>
     );
 }
