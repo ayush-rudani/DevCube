@@ -11,7 +11,10 @@ export const postRegister = (state) => {
         try {
             const response = await axios.post('/api/user/signup', state, config);
             dispatch({ type: 'CLOSE_LOADER' });
-            console.log(response);
+            localStorage.setItem('jwtToken', response.data.token);
+            // console.log(response);
+            dispatch({ type: 'SET_TOKEN', payload: response.data.token });
+
         } catch (error) {
             dispatch({ type: 'CLOSE_LOADER' });
             dispatch({ type: 'REGISTER_ERROR', payload: error.response.data.errors });

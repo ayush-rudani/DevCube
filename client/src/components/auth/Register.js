@@ -4,15 +4,19 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { postRegister } from '../../store/asyncMethods/AuthMethods';
 import toast, { Toaster } from 'react-hot-toast';
+// import { useNavigate } from 'react-router-dom';
 
-function Register() {
 
+const Register = (props) => {
+    // const navigate = useNavigate();
     const [state, setState] = useState({
         name: "",
         email: "",
         password: "",
     });
-    const { loading, registerError } = useSelector((state) => state.AuthReducer);
+
+
+    const { loading, registerError, user } = useSelector((state) => state.AuthReducer);
 
     const dispatch = useDispatch();
 
@@ -26,12 +30,17 @@ function Register() {
 
     }
 
+
     useEffect(() => {
         console.log('RE', registerError);
         if (registerError) {
             toast.error(registerError.message);
         }
-    }, [registerError]);
+        if (user) {
+            // props.navigate.push('/dashboard');
+            // navigate('/dashboard');
+        }
+    }, [registerError, user]);
 
     return (
         <>

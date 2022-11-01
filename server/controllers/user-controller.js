@@ -58,7 +58,7 @@ const signup = async (req, res, nxt) => {
     console.log(err);
     return res.status(500).json({ errors: err });
   }
-  return res.status(201).json({ _id: newUser.id, user: newUser, token: generateToken(newUser._id), message: 'User created successfully' });
+  return res.status(201).json({ _id: newUser.id, user: newUser, token: generateToken(newUser), message: 'User created successfully' });
 }
 
 
@@ -134,8 +134,8 @@ const getMe = async (req, res, next) => {
 }
 
 // Generate a token
-const generateToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '30d' });
+const generateToken = (user) => {
+  return jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: '30d' });
 };
 
 module.exports = { getAllUser, signup, login, getMe };
