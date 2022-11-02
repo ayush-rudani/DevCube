@@ -1,6 +1,6 @@
 # DevCube
 
-## Problem & Solution
+## Problems & Solutions
 - https://stackoverflow.com/questions/69864165/error-privateroute-is-not-a-route-component-all-component-children-of-rou
 - https://stackoverflow.com/questions/66289122/how-to-create-a-protected-route
 
