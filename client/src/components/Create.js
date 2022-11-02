@@ -12,6 +12,7 @@ function Create() {
     });
     const [slug, setSlug] = useState('');
     const [slugButton, setSlugButton] = useState(false);
+    const [imagePreview, setImagePreview] = useState('');
 
     const handleInput = (e) => {
         setState({ ...state, [e.target.name]: e.target.value });
@@ -20,13 +21,27 @@ function Create() {
     }
 
     const slugHandle = (e) => {
+        setSlugButton(true);
         setSlug(e.target.value.trim().split(' ').join('-'));
     }
 
+
+    const handleURL = (e) => {
+        e.preventDefault();
+        setSlug(slug.trim().split(' ').join('-'));
+    }
+
+
     const fileHandle = e => {
         const file = e.target.files[0];
-        // console.log(e.target.files[0]);
         setCurrentImage(file.name);
+        // console.log(e.target.files[0]);
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImagePreview(reader.result);
+        }
+        reader.readAsDataURL(file);
     }
 
     return (
@@ -67,7 +82,12 @@ function Create() {
                                     <input type="text" name="slug" id="slug" value={slug} className="group__control" placeholder='Post URL' onChange={slugHandle}></input>
                                 </div>
                                 <div className="group">
-                                    {slugButton ? <input type="button" value="Create Slug" className="btn btn-default btn-block" onClick={() => setSlugButton(false)} /> : <input type="button" value="Edit Slug" className="btn btn-default btn-block" onClick={() => setSlugButton(true)} />}
+                                    {slugButton ? <button className="btn btn-default" onClick={handleURL}>Update Slug</button> : ''}
+                                </div>
+                                <div className="group">
+                                    <div className="imagePreview">
+                                        {imagePreview ? <img src={imagePreview} alt="" /> : ''}
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -43,6 +43,15 @@
   margin-top: 8rem;
 }
 
+.imagePreview {
+  width: 100%;
+  height: auto;
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
 .group {
   margin-bottom: 1.3rem;
   &__control {
