@@ -55,22 +55,6 @@ function Create() {
     const createPost = async (e) => {
         e.preventDefault();
         console.log(state);
-        // const formData = new FormData();
-        // formData.append('title', state.title);
-        // formData.append('description', state.description);
-        // formData.append('image', state.image);
-        // formData.append('slug', slug);
-
-        // try {
-        //     const res = await fetch('http://localhost:5000/api/create', {
-        //         method: 'POST',
-        //         body: formData,
-        //     });
-        //     const data = await res.json();
-        //     console.log(data);
-        // } catch (error) {
-        //     console.log(error);
-        // }
     }
 
     return (
