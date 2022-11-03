@@ -1,6 +1,7 @@
 const Post = require("../models/Post");
 const Users = require("../models/Users");
 const mongoose = require('mongoose');
+const formidable = require('formidable');
 // const { post } = require("../routes/user-routes");
 
 const getAllPost = async (req, res, nxt) => {
@@ -34,6 +35,7 @@ const createPost = async (req, res, nxt) => {
   });
 
 
+
   //1. save new doc with the new post
   //2. add post id to the corresponding user
   //execute multiple indirectly related operations such that if one fails, we undo all operations: transcations
@@ -52,6 +54,34 @@ const createPost = async (req, res, nxt) => {
     return res.status(500).json({ message: "Unable to create post", error: err });
   }
   return res.status(200).json({ message: "Post created successfully", post: newPost });
+}
+
+
+const createPost2 = async (req, res, nxt) => {
+  const form = formidable({ multiples: true });
+
+  form.parse(req, async (error, fields, files) => {
+
+    const { title, body, description, slug, id, user } = fields;
+    const errors = [];
+
+    if (title === '') {
+      errors.push({ msg: 'Please add a tit' });
+    }
+    if (body === '') {
+      errors.push({ msg: 'Please add a body' });
+    }
+    if (description === '') {
+      errors.push({ msg: 'Please add a description' });
+    }
+    if (slug === '') {
+      errors.push({ msg: 'Please add a slug' });
+    }
+    if (errors.length > 0) {
+      return res.status(400).json({ errors });
+    }
+  })
+  // return res.status(200).json({ data: 'hello' });
 }
 
 const updatePost = async (req, res, nxt) => {
@@ -117,5 +147,5 @@ const getPostsByUserId = async (req, res, nxt) => {
 
 
 module.exports = {
-  getAllPost, createPost, updatePost, deletePost, getPostsByUserId
+  getAllPost, createPost, updatePost, deletePost, getPostsByUserId, createPost2
 }

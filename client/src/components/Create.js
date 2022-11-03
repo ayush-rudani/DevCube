@@ -2,8 +2,15 @@ import { useState, useEffect } from 'react';
 import Helmet from 'react-helmet';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { createAction } from '../store/asyncMethods/PostMethods'
+import { useSelector, useDispatch } from 'react-redux';
 
 function Create() {
+    const dispatch = useDispatch();
+    const { user: { _id, name } } = useSelector(state => state.AuthReducer);
+    // const { _id, name, email } = user;
+    // console.log('user', user);
+
     const [currentImage, setCurrentImage] = useState('Choose Image');
     const [value, setValue] = useState('');
     const [state, setState] = useState({
@@ -54,7 +61,21 @@ function Create() {
 
     const createPost = async (e) => {
         e.preventDefault();
-        console.log(state);
+        const formData = new FormData();
+        const { title, description, image } = state;
+
+        formData.append('title', title);
+        formData.append('body', value);
+        formData.append('image', image);
+        formData.append('description', description);
+        formData.append('slug', slug);
+        formData.append('id', _id);
+        formData.append('name', name);
+
+        dispatch(createAction(formData));
+        // console.log(state);
+        // console.log(slug);
+        // console.log(value);
     }
 
     return (
@@ -84,8 +105,11 @@ function Create() {
                                 </div>
 
                                 <div className="group">
-                                    <input type="submit" value="Create Post" className="btn btn-default btn-block" />
+                                    <label htmlFor="description">Meta Description</label>
+                                    <textarea name="description" id="description" cols="30" rows="10" className="group__control" placeholder="Meta description..." maxLength="150" defaultValue={state.description} onChange={handleDescription}></textarea>
+                                    <p className="length">{state.description ? state.description.length : 0}/150</p>
                                 </div>
+
                             </div>
                         </div>
                         <div className="col-6 p-15">
@@ -102,10 +126,9 @@ function Create() {
                                         {imagePreview ? <img src={imagePreview} alt="" /> : ''}
                                     </div>
                                 </div>
+
                                 <div className="group">
-                                    <label htmlFor="description">Meta Description</label>
-                                    <textarea name="description" id="description" cols="30" rows="10" className="group__control" placeholder="Meta description..." maxLength="150" defaultValue={state.description} onChange={handleDescription}></textarea>
-                                    <p className="length">{state.description ? state.description.length : 0}/150</p>
+                                    <input type="submit" value="Create Post" className="btn btn-default btn-block" />
                                 </div>
                             </div>
                         </div>

@@ -6,7 +6,7 @@ const postSchema = new Schema({
     image: { type: String, required: true },
     body: { type: String, required: true },
     date: { type: Date, default: Date.now },
-
+    slug: { type: String, required: true },
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment', reqired: true }],
 });
