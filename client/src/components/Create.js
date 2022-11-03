@@ -64,8 +64,8 @@ function Create() {
         const formData = new FormData();
         const { title, description, image } = state;
 
-        formData.append('title', title);
         formData.append('body', value);
+        formData.append('title', title);
         formData.append('image', image);
         formData.append('description', description);
         formData.append('slug', slug);

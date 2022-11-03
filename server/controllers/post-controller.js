@@ -59,14 +59,12 @@ const createPost = async (req, res, nxt) => {
 
 const createPost2 = async (req, res, nxt) => {
   const form = formidable({ multiples: true });
-
   form.parse(req, async (error, fields, files) => {
 
     const { title, body, description, slug, id, user } = fields;
     const errors = [];
-
     if (title === '') {
-      errors.push({ msg: 'Please add a tit' });
+      errors.push({ msg: 'Please add a title' });
     }
     if (body === '') {
       errors.push({ msg: 'Please add a body' });
@@ -77,11 +75,53 @@ const createPost2 = async (req, res, nxt) => {
     if (slug === '') {
       errors.push({ msg: 'Please add a slug' });
     }
-    if (errors.length > 0) {
-      return res.status(400).json({ errors });
+    if (Object.keys(files).length === 0) {
+      errors.push({ msg: 'Image is required' });
     }
-  })
-  // return res.status(200).json({ data: 'hello' });
+    else {
+      const { mimetype } = files.image;
+      console.log(mimetype);
+      if (mimetype !== 'image/jpeg' && mimetype !== 'image/png') {
+        errors.push({ msg: `Please upload an image of type 'jpeg' or 'png'` });
+      }
+      else {
+        
+      }
+    }
+    if (errors.length !== 0) {
+      return res.status(400).json({ errors, files });
+    }
+
+
+    return res.json({ files });
+  });
+}
+
+const createPost3 = async (req, res, nxt) => {
+  const form = formidable({ multiples: true });
+
+  // form.parse(req, async (error, fields, files) => {
+
+  //   const { title, body, description, slug, id, user } = fields;
+  //   const errors = [];
+
+  //   if (title === '') {
+  //     errors.push({ msg: 'Please add a tit' });
+  //   }
+  //   if (body === '') {
+  //     errors.push({ msg: 'Please add a body' });
+  //   }
+  //   if (description === '') {
+  //     errors.push({ msg: 'Please add a description' });
+  //   }
+  //   if (slug === '') {
+  //     errors.push({ msg: 'Please add a slug' });
+  //   }
+  //   if (errors.length > 0) {
+  //     return res.status(400).json({ errors });
+  //   }
+  // })
+  return res.status(200).json({ data: 'hello' });
 }
 
 const updatePost = async (req, res, nxt) => {
