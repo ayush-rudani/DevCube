@@ -60,6 +60,7 @@ const createPost = async (req, res, nxt) => {
 }
 
 
+
 const createPost2 = async (req, res, nxt) => {
   const form = formidable({ multiples: true });
 
@@ -134,31 +135,16 @@ const createPost2 = async (req, res, nxt) => {
   });
 }
 
-const createPost3 = async (req, res, nxt) => {
-  const form = formidable({ multiples: true });
+// fetch post by userId
+const fetchPosts = async (req, res, nxt) => {
+  const uid = req.params.uid;
+  try {
+    const response = await Post.find({ user: uid });
+    return res.status(200).json({ response: response });
+  } catch (error) {
+    return res.status(500).json({ msg: error.message, errors: error });
+  }
 
-  // form.parse(req, async (error, fields, files) => {
-
-  //   const { title, body, description, slug, id, user } = fields;
-  //   const errors = [];
-
-  //   if (title === '') {
-  //     errors.push({ msg: 'Please add a tit' });
-  //   }
-  //   if (body === '') {
-  //     errors.push({ msg: 'Please add a body' });
-  //   }
-  //   if (description === '') {
-  //     errors.push({ msg: 'Please add a description' });
-  //   }
-  //   if (slug === '') {
-  //     errors.push({ msg: 'Please add a slug' });
-  //   }
-  //   if (errors.length > 0) {
-  //     return res.status(400).json({ errors });
-  //   }
-  // })
-  return res.status(200).json({ data: 'hello' });
 }
 
 const updatePost = async (req, res, nxt) => {
@@ -214,7 +200,7 @@ const getPostsByUserId = async (req, res, nxt) => {
   try {
     userWithPosts = await Users.findById(userId).populate('posts');
   } catch (err) {
-    return console.log(err);
+    return res.status(500).json({ msg: err.message, errors: err });
   }
   if (!userWithPosts || userWithPosts.posts.length === 0) {
     return res.status(404).json({ message: "No post found for the provided user id" });
@@ -224,5 +210,5 @@ const getPostsByUserId = async (req, res, nxt) => {
 
 
 module.exports = {
-  getAllPost, createPost, updatePost, deletePost, getPostsByUserId, createPost2
+  getAllPost, createPost, updatePost, deletePost, getPostsByUserId, createPost2, fetchPosts
 }
