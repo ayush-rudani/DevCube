@@ -2,6 +2,9 @@ const Post = require("../models/Post");
 const Users = require("../models/Users");
 const mongoose = require('mongoose');
 const formidable = require('formidable');
+const { v4: uuidv4 } = require('uuid');
+const fs = require('fs');
+
 // const { post } = require("../routes/user-routes");
 
 const getAllPost = async (req, res, nxt) => {
@@ -59,9 +62,9 @@ const createPost = async (req, res, nxt) => {
 
 const createPost2 = async (req, res, nxt) => {
   const form = formidable({ multiples: true });
-  form.parse(req, async (error, fields, files) => {
 
-    const { title, body, description, slug, id, user } = fields;
+  form.parse(req, async (error, fields, files) => {
+    const { title, body, description, slug, id, name } = fields;
     const errors = [];
     if (title === '') {
       errors.push({ msg: 'Please add a title' });
@@ -80,20 +83,54 @@ const createPost2 = async (req, res, nxt) => {
     }
     else {
       const { mimetype } = files.image;
-      console.log(mimetype);
-      if (mimetype !== 'image/jpeg' && mimetype !== 'image/png') {
+      // console.log(mimetype);
+      const splitname = mimetype.split('/');
+      const extension = splitname[1].toLowerCase();
+
+      if (extension !== 'jpg' && extension !== 'jpeg' && extension !== 'png') {
         errors.push({ msg: `Please upload an image of type 'jpeg' or 'png'` });
       }
       else {
-        
+        files.image.originalFilename = uuidv4() + '.' + extension;
       }
     }
+
+    const checkSlug = await Post.findOne({ slug });
+    if (checkSlug) {
+      errors.push({ msg: 'Please choose a unique slug/URL' });
+    }
+
     if (errors.length !== 0) {
       return res.status(400).json({ errors, files });
     }
+    else {
+      const newPath = __dirname + `../../../client/public/images/${files.image.originalFilename}`;
+      fs.copyFile(files.image.filepath, newPath, async (error) => {
+        if (!error) {
+          // console.log('File uploaded successfully');
+          try {
+            const response = await Post.create({
+              title,
+              body,
+              image: files.image.originalFilename,
+              description,
+              slug,
+              userName: name,
+              user: id,
+            });
+            return res.status(200).json({ msg: 'Post created successfully', response });
+          }
+          catch (err) {
+            return res.status(500).json({ errors: err, msg: err.message })
+          }
+        }
+        // else {
+        //   console.log(error);
+        // }
+      });
 
-
-    return res.json({ files });
+    }
+    // return res.json({ files });
   });
 }
 

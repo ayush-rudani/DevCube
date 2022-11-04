@@ -1,9 +1,14 @@
 import { Helmet } from 'react-helmet';
+import { useEffect } from 'react';
 
 function Dashboard() {
+
+    useEffect(() => {
+        <Helmet><title>Dashboard</title></Helmet>
+    }, []);
+
     return (
         <>
-            <Helmet><title>Dashboard</title></Helmet>
             <h1>Dashboard</h1>
         </>
     );

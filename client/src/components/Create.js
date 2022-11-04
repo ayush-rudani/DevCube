@@ -4,13 +4,15 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { createAction } from '../store/asyncMethods/PostMethods'
 import { useSelector, useDispatch } from 'react-redux';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 function Create() {
     const dispatch = useDispatch();
     const { user: { _id, name } } = useSelector(state => state.AuthReducer);
+    const { createErrors } = useSelector(state => state.PostReducer);
     // const { _id, name, email } = user;
     // console.log('user', user);
-
     const [currentImage, setCurrentImage] = useState('Choose Image');
     const [value, setValue] = useState('');
     const [state, setState] = useState({
@@ -41,16 +43,17 @@ function Create() {
 
 
     const fileHandle = e => {
-        const file = e.target.files[0];
-        setCurrentImage(file.name);
-        // console.log(e.target.files[0]);
-        setState({ ...state, image: file });
-
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setImagePreview(reader.result);
+        if (e.target.files.length !== 0) {
+            const file = e.target.files[0];
+            setCurrentImage(file.name);
+            // console.log(e.target.files[0]);
+            setState({ ...state, image: file });
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            }
+            reader.readAsDataURL(file);
         }
-        reader.readAsDataURL(file);
     }
 
     const handleDescription = (e) => {
@@ -78,12 +81,23 @@ function Create() {
         // console.log(value);
     }
 
+
+    useEffect(() => {
+        if (!createErrors && createErrors.length !== 0) {
+            createErrors.map(err => toast.error(err.msg));
+        }
+    }, [createErrors]);
+
+    useEffect(() => {
+        <Helmet>
+            <title>Create new post</title>
+            <meta name='description' content='Create a new post' />
+        </Helmet>
+    }, []);
+
     return (
         <div className="create mt-100">
-            <Helmet>
-                <title>Create new post</title>
-                <meta name='description' content='Create a new post' />
-            </Helmet>
+            <Toaster toastOptions={{ style: { fontSize: '14px', } }} />
             <div className='container'>
                 <form onSubmit={createPost}>
                     <div className='row ml-minus-15 mr-minus-15'>

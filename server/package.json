@@ -19,6 +19,7 @@
     "jq": "^1.7.2",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.9.1",
-    "mongoose": "^6.6.0"
+    "mongoose": "^6.6.0",
+    "uuid": "^9.0.0"
   }
 }
