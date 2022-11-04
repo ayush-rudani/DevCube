@@ -5,12 +5,15 @@ import 'react-quill/dist/quill.snow.css';
 import { createAction } from '../store/asyncMethods/PostMethods'
 import { useSelector, useDispatch } from 'react-redux';
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 
 function Create() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const { user: { _id, name } } = useSelector(state => state.AuthReducer);
-    const { createErrors } = useSelector(state => state.PostReducer);
+    const { createErrors, redirect } = useSelector(state => state.PostReducer);
     // const { _id, name, email } = user;
     // console.log('user', user);
     const [currentImage, setCurrentImage] = useState('Choose Image');
@@ -83,10 +86,13 @@ function Create() {
 
 
     useEffect(() => {
+        if (redirect) {
+            navigate('/dashboard');
+        }
         if (!createErrors && createErrors.length !== 0) {
             createErrors.map(err => toast.error(err.msg));
         }
-    }, [createErrors]);
+    }, [createErrors, redirect]);
 
     useEffect(() => {
         <Helmet>

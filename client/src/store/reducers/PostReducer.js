@@ -22,8 +22,8 @@ import {
 const initState = {
     loading: false,
     createErrors: [],
-    // redirect: false,
-    // message: '',
+    redirect: false,
+    message: '',
     // posts: [],
     // perPage: 0,
     // count: 0,

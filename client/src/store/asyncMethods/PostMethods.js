@@ -1,13 +1,13 @@
 import axios from 'axios';
 import {
     CREATE_ERRORS,
-    // REMOVE_ERRORS,
+    REMOVE_ERRORS,
     SET_LOADER,
     CLOSE_LOADER,
-    // REDIRECT_TRUE,
-    // REDIRECT_FALSE,
-    // SET_MESSAGE,
-    // REMOVE_MESSAGE,
+    REDIRECT_TRUE,
+    REDIRECT_FALSE,
+    SET_MESSAGE,
+    REMOVE_MESSAGE,
     // SET_POSTS,
     // SET_POST,
     // POST_REQUEST,
@@ -48,9 +48,12 @@ export const createAction = (postData) => {
                     Authorization: `Bearer ${token}`,
                 }
             }
-            const { data } = await axios.post('/api/post/new', postData, config);
+            const { data: { msg } } = await axios.post('/api/post/new', postData, config);
             dispatch({ type: CLOSE_LOADER });
-            console.log(data);
+            dispatch({ type: REMOVE_ERRORS });
+            dispatch({ type: REDIRECT_TRUE });
+            dispatch({ type: SET_MESSAGE, payload: msg });
+            // console.log(data);
         }
         catch (error) {
             console.log(error.response);

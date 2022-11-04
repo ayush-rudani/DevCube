@@ -20,6 +20,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.9.1",
     "mongoose": "^6.6.0",
+    "nodemon": "^2.0.20",
     "uuid": "^9.0.0"
   }
 }
