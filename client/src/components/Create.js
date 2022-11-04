@@ -89,7 +89,7 @@ function Create() {
         if (redirect) {
             navigate('/dashboard');
         }
-        if (!createErrors && createErrors.length !== 0) {
+        if (createErrors.length !== 0) {
             createErrors.map(err => toast.error(err.msg));
         }
     }, [createErrors, redirect]);

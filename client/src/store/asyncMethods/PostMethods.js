@@ -18,7 +18,7 @@ import {
     // COMMENTS,
 } from '../types/PostTypes';
 
-const token = localStorage.getItem('jwtToken');
+// const token = localStorage.getItem('jwtToken');
 
 // export const createAction = (postData) => {
 //     return async (dispatch) => {
@@ -40,7 +40,9 @@ const token = localStorage.getItem('jwtToken');
 
 
 export const createAction = (postData) => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
+        const { AuthReducer: { token } } = await getState();
+
         dispatch({ type: SET_LOADER });
         try {
             const config = {

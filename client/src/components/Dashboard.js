@@ -15,6 +15,7 @@ import {
 function Dashboard() {
 
     const { redirect, message } = useSelector(state => state.PostReducer);
+    const { user } = useSelector(state => state.AuthReducer);
     const dispatch = useDispatch();
 
     useEffect(() => {
