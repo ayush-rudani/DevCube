@@ -50,7 +50,7 @@ function Dashboard() {
             <div className='container mt-100'>
                 <div className='row ml-minus-15 mr-minus-15'>
                     <div className='col-3 p-15'>
-                        lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. tenetur quae, quod, quibusdam, voluptas quidem voluptatibus quos voluptate quia quas. Quisquam, quod. tenetur quae, quod, quibusdam, voluptas quidem voluptatibus quos voluptate quia quas.
+                        <Sidebar />
                     </div>
                     <div className='col-9 p-15'>
                         {/* {posts.length} */}
@@ -69,7 +69,7 @@ function Dashboard() {
                                     </div>
                                 ))
                                 : 'You dont have any post' :
-                            'loading....'}
+                            <Loader />}
                     </div>
                 </div>
             </div>

@@ -5,9 +5,11 @@ const Sidebar = () => {
 			<div className='sidebar__element'>
 				<h3>Setting</h3>
 			</div>
+
 			<div className='sidebar__element'>
 				<Link to='/updatePassword'>Change Password</Link>
-			</div>
+			</div> 
+
 			<div className='sidebar__element'>
 				<Link to='/updateName'>Change Name</Link>
 			</div>

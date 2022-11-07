@@ -1,3 +1,4 @@
+
 const Loader = () => {
 	return (
 		<div className='loader__container'>
