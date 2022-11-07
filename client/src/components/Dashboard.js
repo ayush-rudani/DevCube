@@ -13,6 +13,12 @@ import {
 } from '../store/types/PostTypes';
 
 import { fetchPosts } from '../store/asyncMethods/PostMethods'
+import { Link } from 'react-router-dom';
+import { BsPencilSquare, BsArchive } from "react-icons/bs";
+import Loader from './Loader';
+import Sidebar from './Sidebar';
+import axios from 'axios';
+// import moment from 'moment';
 
 function Dashboard() {
     const dispatch = useDispatch();
@@ -44,43 +50,26 @@ function Dashboard() {
             <div className='container mt-100'>
                 <div className='row ml-minus-15 mr-minus-15'>
                     <div className='col-3 p-15'>
-                        
+                        lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. tenetur quae, quod, quibusdam, voluptas quidem voluptatibus quos voluptate quia quas. Quisquam, quod. tenetur quae, quod, quibusdam, voluptas quidem voluptatibus quos voluptate quia quas.
                     </div>
                     <div className='col-9 p-15'>
-                        {!loading ? (
-                            posts.length > 0 ? (
+                        {/* {posts.length} */}
+                        {!loading ?
+                            posts.length > 0 ?
                                 posts.map((post) => (
                                     <div className='dashboard__posts' key={post._id}>
                                         <div className='dashboard__posts__title'>
-                                            <Link to={`/details/${post.slug}`}>{post.title}</Link>
-                                            <span>Published {moment(post.updatedAt).fromNow()}</span>
+                                            <Link to={`/`}>{post.title}</Link>
                                         </div>
                                         <div className='dashboard__posts__links'>
-                                            <Link to={`/updateImage/${post._id}`}>
-                                                <BsImage className='icon' />
-                                            </Link>
-                                            <Link to={`/edit/${post._id}`}>
-                                                <BsPencil className='icon' />
-                                            </Link>
-                                            <BsArchive
-                                                onClick={() => deletePost(post._id)}
-                                                className='icon'
-                                            />
+                                            <Link to="/"><BsPencilSquare className='icon' /></Link>
+                                            <BsArchive className='icon' />
                                         </div>
+
                                     </div>
                                 ))
-                            ) : (
-                                'You dont have any post'
-                            )
-                        ) : (
-                            <Loader />
-                        )}
-                        <Pagination
-                            path='dashboard'
-                            page={page}
-                            perPage={perPage}
-                            count={count}
-                        />
+                                : 'You dont have any post' :
+                            'loading....'}
                     </div>
                 </div>
             </div>
