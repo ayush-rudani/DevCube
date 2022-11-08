@@ -42,9 +42,11 @@ const verifyToken = (token) => {
 
 if (token) {
     const decoded = verifyToken(token);
-    initialState.token = token;
-    const { user } = decoded;
-    initialState.user = user;
+    if (decoded) {
+        initialState.token = token;
+        const { user } = decoded;
+        initialState.user = user;
+    }
 }
 
 const AuthReducer = (state = initialState, action) => {

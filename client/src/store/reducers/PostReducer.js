@@ -25,8 +25,8 @@ const initState = {
     redirect: false,
     message: '',
     posts: [],
-    // perPage: 0,
-    // count: 0,
+    perPage: 0,
+    count: 0,
     // post: {},
     // postStatus: false,
     // editErrors: [],
@@ -67,11 +67,12 @@ export const PostReducer = (state = initState, action) => {
 export const FetchPosts = (state = initState, action) => {
     const { type, payload } = action;
     if (type === SET_POSTS) {
-        return { ...state, posts: payload };
+        return { ...state, posts: payload.response, perPage: payload.perPage, count: payload.count };
     } else {
         return state;
     }
 };
+
 // export const FetchPost = (state = initState, action) => {
 //     const { type, payload } = action;
 //     if (type === SET_POST) {

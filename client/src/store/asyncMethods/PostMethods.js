@@ -70,7 +70,8 @@ export const createAction = (postData) => {
 }
 
 
-export const fetchPosts = (uid) => {
+export const fetchPosts = (uid, page) => {
+    page === undefined ? page = 1 : page = page;
     return async (dispatch, getState) => {
         const { AuthReducer: { token } } = getState();
         dispatch({ type: SET_LOADER });
@@ -80,9 +81,9 @@ export const fetchPosts = (uid) => {
                     Authorization: `Bearer ${token}`,
                 }
             }
-            const { data: { response } } = await axios.get(`/api/post/${uid}`, config);
+            const { data: { response, count, perPage } } = await axios.get(`/api/post/${uid}/${page}`, config);
             dispatch({ type: CLOSE_LOADER });
-            dispatch({ type: SET_POSTS, payload: response });
+            dispatch({ type: SET_POSTS, payload: { response, count, perPage } });
         } catch (error) {
             dispatch({ type: CLOSE_LOADER });
         }

@@ -136,16 +136,34 @@ const createPost2 = async (req, res, nxt) => {
 }
 
 // fetch post by userId
+// const fetchPosts = async (req, res, nxt) => {
+//   const uid = req.params.uid;
+//   console.log(uid);
+//   try {
+//     const response = await Post.find({ user: uid });
+//     return res.status(200).json({ response: response });
+//   } catch (error) {
+//     return res.status(500).json({ msg: error.message, errors: error });
+//   }
+
+// }
+
 const fetchPosts = async (req, res, nxt) => {
   const uid = req.params.uid;
+  const page = req.params.page;
+  const perPage = 3;
+  const skip = (page - 1) * perPage;
   try {
-    const response = await Post.find({ user: uid });
-    return res.status(200).json({ response: response });
+    const count = await Post.find({ user: uid }).countDocuments();
+    const response = await Post.find({ user: uid })
+      .skip(skip)
+      .limit(perPage)
+      .sort({ updatedAt: -1 });
+    return res.status(200).json({ response: response, count, perPage });
   } catch (error) {
-    return res.status(500).json({ msg: error.message, errors: error });
+    return res.status(500).json({ errors: error, msg: error.message });
   }
-
-}
+};
 
 const updatePost = async (req, res, nxt) => {
   const { title, content } = req.body;

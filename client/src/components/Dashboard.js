@@ -13,21 +13,25 @@ import {
 } from '../store/types/PostTypes';
 
 import { fetchPosts } from '../store/asyncMethods/PostMethods'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { BsPencilSquare, BsArchive } from "react-icons/bs";
+import axios from 'axios';
 import Loader from './Loader';
 import Sidebar from './Sidebar';
-import axios from 'axios';
+import Pagination from './Pagination';
 // import moment from 'moment';
 
 function Dashboard() {
     const dispatch = useDispatch();
+    let { page } = useParams();
+    if (page === undefined) {
+        page = 1;
+    }
 
     const { redirect, message, loading } = useSelector(state => state.PostReducer);
     const { user: { _id } } = useSelector(state => state.AuthReducer);
-    const { posts } = useSelector(state => state.FetchPosts);
-
-    console.log('Posts->', posts);
+    const { posts, count, perPage } = useSelector(state => state.FetchPosts);
+    // console.log('Posts->', posts);
 
     useEffect(() => {
         if (redirect) {
@@ -37,8 +41,8 @@ function Dashboard() {
             toast.success(message);
             dispatch({ type: REMOVE_MESSAGE });
         }
-        dispatch(fetchPosts(_id));
-    }, []);
+        dispatch(fetchPosts(_id, page));
+    }, [page]);
 
     useEffect(() => {
         <Helmet><title>Dashboard</title></Helmet>
@@ -52,6 +56,7 @@ function Dashboard() {
                     <div className='col-3 p-15'>
                         <Sidebar />
                     </div>
+
                     <div className='col-9 p-15'>
                         {/* {posts.length} */}
                         {!loading ?
@@ -70,6 +75,13 @@ function Dashboard() {
                                 ))
                                 : 'You dont have any post' :
                             <Loader />}
+
+                        <Pagination
+                            path='dashboard'
+                            page={page}
+                            perPage={perPage}
+                            count={count}
+                        />
                     </div>
                 </div>
             </div>

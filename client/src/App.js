@@ -34,7 +34,8 @@ function App() {
             <Route exact path="/register" element={<Register />} />
             <Route exact path="/login" element={<Login />} />
             <Route path="/" element={<PrivateRoutes />}>
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path='/dashboard/:page' element={<Dashboard />} />
+              <Route path='/dashboard' element={<Dashboard />} />
               <Route path="/create" element={<Create />} />
             </Route>
             <Route path='*' element={<NotFound />} />
