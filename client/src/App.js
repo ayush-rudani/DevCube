@@ -30,6 +30,7 @@ function App() {
             <RouteLinks exact path="/dashboard" element={<Dashboard/>} />
             <RouteLinks exact path="/dashboard" element={<PrivateRoutes element={<Dashboard />} />} /> */}
 
+            <Route exact path="/:page" element={<Home />} />
             <Route exact path="/" element={<Home />} />
             <Route exact path="/register" element={<Register />} />
             <Route exact path="/login" element={<Login />} />

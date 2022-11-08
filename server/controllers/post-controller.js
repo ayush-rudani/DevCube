@@ -7,18 +7,37 @@ const fs = require('fs');
 
 // const { post } = require("../routes/user-routes");
 
-const getAllPost = async (req, res, nxt) => {
-  let posts;
+// const getAllPost = async (req, res, nxt) => {
+//   let posts;
+//   try {
+//     posts = await Post.find();
+//   } catch (err) {
+//     return console.log(err);
+//   }
+//   if (!posts) {
+//     return res.staus(404).json({ message: 'No post found' });
+//   }
+//   return res.status(200).json({ posts });
+// }
+
+
+
+const getAllPost = async (req, res) => {
+  const page = req.params.page;
+  const perPage = 6;
+  const skip = (page - 1) * perPage;
   try {
-    posts = await Post.find();
-  } catch (err) {
-    return console.log(err);
+    const count = await Post.find({}).countDocuments();
+    const posts = await Post.find({})
+      .skip(skip)
+      .limit(perPage)
+      .sort({ updatedAt: -1 });
+    return res.status(200).json({ response: posts, count, perPage });
+  } catch (error) {
+    return res.status(500).json({ errors: error, msg: error.message });
   }
-  if (!posts) {
-    return res.staus(404).json({ message: 'No post found' });
-  }
-  return res.status(200).json({ posts });
-}
+};
+
 
 const createPost = async (req, res, nxt) => {
   const { title, body, image, user } = req.body;

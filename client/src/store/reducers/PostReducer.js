@@ -9,9 +9,9 @@ import {
     REMOVE_MESSAGE,
     SET_POSTS,
     SET_POST,
-    // POST_REQUEST,
-    // POST_RESET,
-    // RESET_UPDATE,
+    POST_REQUEST,
+    POST_RESET,
+    RESET_UPDATE,
     // SET_UPDATE_ERRORS,
     // RESET_UPDATE_ERRORS,
     // UPDATE_IMAGE_ERROR,
@@ -73,18 +73,20 @@ export const FetchPosts = (state = initState, action) => {
     }
 };
 
-// export const FetchPost = (state = initState, action) => {
-//     const { type, payload } = action;
-//     if (type === SET_POST) {
-//         return { ...state, post: payload };
-//     } else if (type === POST_REQUEST) {
-//         return { ...state, postStatus: true };
-//     } else if (type === POST_RESET) {
-//         return { ...state, postStatus: false };
-//     } else {
-//         return state;
-//     }
-// };
+export const FetchPost = (state = initState, action) => {
+    const { type, payload } = action;
+    if (type === SET_POST) {
+        return { ...state, post: payload };
+    } else if (type === POST_REQUEST) {
+        return { ...state, postStatus: true };
+    } else if (type === POST_RESET) {
+        return { ...state, postStatus: false };
+    } else {
+        return state;
+    }
+};
+
+
 // export const UpdatePost = (state = initState, action) => {
 //     const { type, payload } = action;
 //     if (type === SET_UPDATE_ERRORS) {
