@@ -1,9 +1,10 @@
-const Post = require("../models/Post");
-const Users = require("../models/Users");
 const mongoose = require('mongoose');
 const formidable = require('formidable');
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
+const Post = require("../models/Post");
+const Users = require("../models/Users");
+const Comment = require("../models/Comment");
 
 // const { post } = require("../routes/user-routes");
 
@@ -257,6 +258,25 @@ const getPostsByUserId = async (req, res, nxt) => {
 }
 
 
+
+// -------------------------------------------------------------------------
+
+const postComment = async (req, res, nxt) => {
+  const { id, comment, userName } = req.body;
+  try {
+    const response = await Comment.create({
+      postId: id,
+      comment,
+      userName,
+    });
+    return res.status(200).json({ msg: 'Your comment has been published' }); 
+  } catch (error) {
+    return res.status(500).json({ errors: error, msg: error.message });
+  }
+}
+
+
+
 module.exports = {
-  getAllPost, createPost, updatePost, deletePost, postDetails, getPostsByUserId, createPost2, fetchPosts
+  getAllPost, createPost, updatePost, deletePost, postDetails, getPostsByUserId, createPost2, fetchPosts, postComment
 }

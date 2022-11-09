@@ -123,3 +123,25 @@ export const postDetails = (id) => {
         }
     };
 };
+
+export const postComment = (commentData) => {
+    return async (dispatch, getState) => {
+        const { AuthReducer: { token } } = getState();
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        dispatch({ type: SET_LOADER });
+        try {
+
+            const { data } = await axios.post('/api/post/comment', commentData, config);
+            dispatch({ type: CLOSE_LOADER });
+            console.log(data);
+        }
+        catch (error) {
+            dispatch({ type: CLOSE_LOADER });
+            console.log(error);
+        }
+    }
+}
