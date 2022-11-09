@@ -31,7 +31,7 @@ const initState = {
     // postStatus: false,
     // editErrors: [],
     // updateImageErrors: [],
-    // details: {},
+    details: {},
     // comments: [],
 };
 export const PostReducer = (state = initState, action) => {

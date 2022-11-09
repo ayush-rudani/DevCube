@@ -15,8 +15,8 @@ import {
     // EDIT_ERRORS,
     // SET_UPDATE_ERRORS,
     // UPDATE_IMAGE_ERROR,
-    // SET_DETAILS,
-    // COMMENTS,
+    SET_DETAILS,
+    COMMENTS,
 } from '../types/PostTypes';
 
 // const token = localStorage.getItem('jwtToken');
@@ -81,7 +81,7 @@ export const fetchPosts = (uid, page) => {
                     Authorization: `Bearer ${token}`,
                 }
             }
-            const { data: { response, count, perPage } } = await axios.get(`/api/post/${uid}/${page}`, config);
+            const { data: { response, count, perPage } } = await axios.get(`/api/post/up/${uid}/${page}`, config);
             dispatch({ type: CLOSE_LOADER });
             dispatch({ type: SET_POSTS, payload: { response, count, perPage } });
         } catch (error) {
@@ -101,6 +101,22 @@ export const homePosts = (page) => {
             } = await axios.get(`/api/post/${page}`);
             dispatch({ type: CLOSE_LOADER });
             dispatch({ type: SET_POSTS, payload: { response, count, perPage } });
+        } catch (error) {
+            dispatch({ type: CLOSE_LOADER });
+            console.log(error);
+        }
+    };
+};
+
+export const postDetails = (id) => {
+    return async (dispatch) => {
+        dispatch({ type: SET_LOADER });
+        try {
+            const {
+                data: { post },
+            } = await axios.get(`/api/post/details/${id}`);
+            dispatch({ type: CLOSE_LOADER });
+            dispatch({ type: SET_DETAILS, payload: post });
         } catch (error) {
             dispatch({ type: CLOSE_LOADER });
             console.log(error);

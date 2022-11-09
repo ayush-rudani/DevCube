@@ -184,6 +184,17 @@ const fetchPosts = async (req, res, nxt) => {
   }
 };
 
+
+const postDetails = async (req, res, nxt) => {
+  const id = req.params.id;
+  try {
+    const post = await Post.findOne({ _id: id });
+    return res.status(200).json({ post });
+  } catch (error) {
+    return res.status(500).json({ errors: error, msg: error.message });
+  }
+}
+
 const updatePost = async (req, res, nxt) => {
   const { title, content } = req.body;
   const postId = req.params.id;
@@ -247,5 +258,5 @@ const getPostsByUserId = async (req, res, nxt) => {
 
 
 module.exports = {
-  getAllPost, createPost, updatePost, deletePost, getPostsByUserId, createPost2, fetchPosts
+  getAllPost, createPost, updatePost, deletePost, postDetails, getPostsByUserId, createPost2, fetchPosts
 }

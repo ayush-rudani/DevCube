@@ -1,10 +1,10 @@
-import { Helmet } from "react-helmet";
+// import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { homePosts } from '../store/asyncMethods/PostMethods';
 import { useParams, Link } from 'react-router-dom';
 import moment from 'moment';
-// import { htmlToText } from 'html-to-text';
 import htmlToFormattedText from "html-to-formatted-text";
 import Loader from './Loader';
 import Pagination from './Pagination';
@@ -17,21 +17,18 @@ const Home = () => {
 	}
 	const { loading } = useSelector(state => state.PostReducer);
 	const { posts, count, perPage } = useSelector(state => state.FetchPosts);
-	console.log(posts, page, count, perPage);
+	// console.log(posts, page, count, perPage);
 
 	useEffect(() => {
 		dispatch(homePosts(page));
 	}, [page]);
-
-	useEffect(() => {
-		<Helmet><title>DevCube Home</title></Helmet>
-	}, []);
 
 	// let text = htmlToFormattedText(posts[0].body.slice(0, 300));
 	// console.log(text);
 
 	return (
 		<>
+			<HelmetProvider><Helmet><title>DevCube Home</title></Helmet></HelmetProvider>
 			<div className='container'>
 				<div className='row mt-100' style={{ marginBottom: '30px' }}>
 					<div className='col-9 home'>
@@ -54,7 +51,7 @@ const Home = () => {
 												</div>
 												<div className='post__body'>
 													<h1 className='post__body__title'>
-														<Link to={`/details/${post.slug}`}>
+														<Link to={`/details/${post._id}`}>
 															{post.title}
 														</Link>
 													</h1>

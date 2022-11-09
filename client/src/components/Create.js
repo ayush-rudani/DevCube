@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Helmet from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { createAction } from '../store/asyncMethods/PostMethods'
@@ -94,15 +94,16 @@ function Create() {
         }
     }, [createErrors, redirect]);
 
-    useEffect(() => {
-        <Helmet>
-            <title>Create new post</title>
-            <meta name='description' content='Create a new post' />
-        </Helmet>
-    }, []);
+    // useEffect(() => {
+    //     <Helmet>
+    //         <title>Create new post</title>
+    //         <meta name='description' content='Create a new post' />
+    //     </Helmet>
+    // }, []);
 
     return (
         <div className="create mt-100">
+            <HelmetProvider><Helmet><title>Create Post</title></Helmet></HelmetProvider>
             <Toaster toastOptions={{ style: { fontSize: '14px', } }} />
             <div className='container'>
                 <form onSubmit={createPost}>

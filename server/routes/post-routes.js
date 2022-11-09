@@ -4,9 +4,13 @@ const postC = require("../controllers/post-controller");
 const auth = require("../middleware/auth");
 
 router.get('/:page', postC.getAllPost);
-router.get('/:uid/:page', postC.fetchPosts);
-router.post('/new', auth.protect, postC.createPost2);
+
+// fetch all posts of a user
+router.get('/up/:uid/:page', postC.fetchPosts);
 // router.get('/home', postC.getHomePosts);
+// fetch perticular post
+router.get('/details/:id', postC.postDetails);
+router.post('/new', auth.protect, postC.createPost2);
 router.put('/update/:id', postC.updatePost);
 router.delete('/del/:id', postC.deletePost);
 router.get('/user/:id', postC.getPostsByUserId);

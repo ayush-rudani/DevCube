@@ -14,6 +14,7 @@ import Login from './components/auth/Login';
 import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
 import Create from './components/Create';
+import Details from './components/Details';
 
 
 
@@ -34,6 +35,7 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route exact path="/register" element={<Register />} />
             <Route exact path="/login" element={<Login />} />
+            <Route exact path="/details/:id" element={<Details />} />
             <Route path="/" element={<PrivateRoutes />}>
               <Route path='/dashboard/:page' element={<Dashboard />} />
               <Route path='/dashboard' element={<Dashboard />} />
