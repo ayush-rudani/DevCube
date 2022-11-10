@@ -7,13 +7,14 @@ import moment from 'moment';
 import htmlToFormattedText from "html-to-formatted-text";
 
 import Loader from './Loader';
+import Comments from './Comments';
 
 function Details() {
 
     const dispatch = useDispatch();
     const { id } = useParams();
 
-    const { loading, details } = useSelector(
+    const { loading, details, comments } = useSelector(
         (state) => state.PostReducer
     );
     const { user } = useSelector(state => state.AuthReducer);
@@ -21,9 +22,9 @@ function Details() {
 
     const addComment = (e) => {
         e.preventDefault();
-        // console.log(comment);
         dispatch(postComment({ id, comment, userName: user.name }));
         setComment('');
+        dispatch(postDetails(id));
     }
 
     useEffect(() => {
@@ -59,16 +60,22 @@ function Details() {
                                     <img src={`/images/${details.image}`} alt={details.image} />
                                 </div>
                             </div>
-                            {user ? <div className='post__comment'>
-                                <form onSubmit={addComment}>
-                                    <div className='group'>
-                                        <input type="text" name="" id="" className='group__control' placeholder='Write comment ...' onChange={(e) => setComment(e.target.value)} value={comment} />
+                            <hr style={{ marginBottom: "20px", marginTop: "20px" }} />
+                            {user ?
+                                <>
+                                    <div className='post__comment'>
+                                        <form onSubmit={addComment}>
+                                            <div className='group'>
+                                                <input type="text" name="" id="" className='group__control' placeholder='Write comment ...' onChange={(e) => setComment(e.target.value)} value={comment} />
+                                            </div>
+                                            <div className='group'>
+                                                <input type="submit" value="Post Comment" className='btn btn-default' />
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div className='group'>
-                                        <input type="submit" value="Post Comment" className='btn btn-default' />
-                                    </div>
-                                </form>
-                            </div>
+                                    <Comments comments={comments} />
+                                </>
+
                                 : ''}
                         </div>
                         : <Loader />}

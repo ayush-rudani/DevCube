@@ -32,7 +32,7 @@ const initState = {
     // editErrors: [],
     // updateImageErrors: [],
     details: {},
-    // comments: [],
+    comments: [],
 };
 export const PostReducer = (state = initState, action) => {
     const { type, payload } = action;

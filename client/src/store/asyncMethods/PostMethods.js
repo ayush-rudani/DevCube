@@ -113,10 +113,12 @@ export const postDetails = (id) => {
         dispatch({ type: SET_LOADER });
         try {
             const {
-                data: { post },
+                data: { post, comments },
             } = await axios.get(`/api/post/details/${id}`);
+            // console.log(comments);
             dispatch({ type: CLOSE_LOADER });
             dispatch({ type: SET_DETAILS, payload: post });
+            dispatch({ type: COMMENTS, payload: comments });
         } catch (error) {
             dispatch({ type: CLOSE_LOADER });
             console.log(error);

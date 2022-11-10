@@ -190,7 +190,8 @@ const postDetails = async (req, res, nxt) => {
   const id = req.params.id;
   try {
     const post = await Post.findOne({ _id: id });
-    return res.status(200).json({ post });
+    const comments = await Comment.find({ postId: post._id }).sort({ updatedAt: -1 });
+    return res.status(200).json({ post, comments });
   } catch (error) {
     return res.status(500).json({ errors: error, msg: error.message });
   }
@@ -269,7 +270,7 @@ const postComment = async (req, res, nxt) => {
       comment,
       userName,
     });
-    return res.status(200).json({ msg: 'Your comment has been published' }); 
+    return res.status(200).json({ msg: 'Your comment has been published' });
   } catch (error) {
     return res.status(500).json({ errors: error, msg: error.message });
   }
