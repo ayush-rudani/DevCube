@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const formidable = require('formidable');
-const { v4: uuidv4 } = require('uuid');
-const fs = require('fs');
+const mongoose = require("mongoose");
+const formidable = require("formidable");
+const { v4: uuidv4 } = require("uuid");
+const fs = require("fs");
 const Post = require("../models/Post");
 const Users = require("../models/Users");
 const Comment = require("../models/Comment");
@@ -21,8 +21,6 @@ const Comment = require("../models/Comment");
 //   return res.status(200).json({ posts });
 // }
 
-
-
 const getAllPost = async (req, res) => {
   const page = req.params.page;
   const perPage = 6;
@@ -39,7 +37,6 @@ const getAllPost = async (req, res) => {
   }
 };
 
-
 const createPost = async (req, res, nxt) => {
   const { title, body, image, user } = req.body;
 
@@ -54,10 +51,11 @@ const createPost = async (req, res, nxt) => {
   }
 
   const newPost = new Post({
-    title, body, image, user: user
+    title,
+    body,
+    image,
+    user: user,
   });
-
-
 
   //1. save new doc with the new post
   //2. add post id to the corresponding user
@@ -74,12 +72,14 @@ const createPost = async (req, res, nxt) => {
     await session.commitTransaction();
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: "Unable to create post", error: err });
+    return res
+      .status(500)
+      .json({ message: "Unable to create post", error: err });
   }
-  return res.status(200).json({ message: "Post created successfully", post: newPost });
-}
-
-
+  return res
+    .status(200)
+    .json({ message: "Post created successfully", post: newPost });
+};
 
 const createPost2 = async (req, res, nxt) => {
   const form = formidable({ multiples: true });
@@ -87,45 +87,44 @@ const createPost2 = async (req, res, nxt) => {
   form.parse(req, async (error, fields, files) => {
     const { title, body, description, slug, id, name } = fields;
     const errors = [];
-    if (title === '') {
-      errors.push({ msg: 'Please add a title' });
+    if (title === "") {
+      errors.push({ msg: "Please add a title" });
     }
-    if (body === '') {
-      errors.push({ msg: 'Please add a body' });
+    if (body === "") {
+      errors.push({ msg: "Please add a body" });
     }
-    if (description === '') {
-      errors.push({ msg: 'Please add a description' });
+    if (description === "") {
+      errors.push({ msg: "Please add a description" });
     }
-    if (slug === '') {
-      errors.push({ msg: 'Please add a slug' });
+    if (slug === "") {
+      errors.push({ msg: "Please add a slug" });
     }
     if (Object.keys(files).length === 0) {
-      errors.push({ msg: 'Image is required' });
-    }
-    else {
+      errors.push({ msg: "Image is required" });
+    } else {
       const { mimetype } = files.image;
       // console.log(mimetype);
-      const splitname = mimetype.split('/');
+      const splitname = mimetype.split("/");
       const extension = splitname[1].toLowerCase();
 
-      if (extension !== 'jpg' && extension !== 'jpeg' && extension !== 'png') {
+      if (extension !== "jpg" && extension !== "jpeg" && extension !== "png") {
         errors.push({ msg: `Please upload an image of type 'jpeg' or 'png'` });
-      }
-      else {
-        files.image.originalFilename = uuidv4() + '.' + extension;
+      } else {
+        files.image.originalFilename = uuidv4() + "." + extension;
       }
     }
 
     const checkSlug = await Post.findOne({ slug });
     if (checkSlug) {
-      errors.push({ msg: 'Please choose a unique slug/URL' });
+      errors.push({ msg: "Please choose a unique slug/URL" });
     }
 
     if (errors.length !== 0) {
       return res.status(400).json({ errors, files });
-    }
-    else {
-      const newPath = __dirname + `../../../client/public/images/${files.image.originalFilename}`;
+    } else {
+      const newPath =
+        __dirname +
+        `../../../client/public/images/${files.image.originalFilename}`;
       fs.copyFile(files.image.filepath, newPath, async (error) => {
         if (!error) {
           // console.log('File uploaded successfully');
@@ -139,21 +138,22 @@ const createPost2 = async (req, res, nxt) => {
               userName: name,
               user: id,
             });
-            return res.status(200).json({ msg: 'Your post has been created successfully', response });
-          }
-          catch (err) {
-            return res.status(500).json({ errors: err, msg: err.message })
+            return res.status(200).json({
+              msg: "Your post has been created successfully",
+              response,
+            });
+          } catch (err) {
+            return res.status(500).json({ errors: err, msg: err.message });
           }
         }
         // else {
         //   console.log(error);
         // }
       });
-
     }
     // return res.json({ files });
   });
-}
+};
 
 // fetch post by userId
 // const fetchPosts = async (req, res, nxt) => {
@@ -185,17 +185,18 @@ const fetchPosts = async (req, res, nxt) => {
   }
 };
 
-
 const postDetails = async (req, res, nxt) => {
   const id = req.params.id;
   try {
     const post = await Post.findOne({ _id: id });
-    const comments = await Comment.find({ postId: post._id }).sort({ updatedAt: -1 });
+    const comments = await Comment.find({ postId: post._id }).sort({
+      updatedAt: -1,
+    });
     return res.status(200).json({ post, comments });
   } catch (error) {
     return res.status(500).json({ errors: error, msg: error.message });
   }
-}
+};
 
 const updatePost = async (req, res, nxt) => {
   const { title, content } = req.body;
@@ -205,60 +206,70 @@ const updatePost = async (req, res, nxt) => {
     const post = await Post.findByIdAndUpdate(postId, { title, content });
   } catch (err) {
     return console.log(err);
-  } 6
+  }
+  6;
   if (!post) {
     return res.status(500).json({ message: "Post not found (Unable to found" });
   }
   return res.status(200).json({ message: "Post updated successfully" });
-}
+};
+
+// const deletePost = async (req, res, nxt) => {
+//   const id = req.params.id;
+//   let post;
+//   try {
+//     post = await Post.findById(id).populate('user');
+//     // if (post != null) {
+//     // console.log(post.user);
+//     // await post.user.posts.pull(post);
+//     // }
+//   } catch (err) {
+//     console.log(err);
+//   }
+//   if (!post) {
+//     res.status(404).json({ message: "Post not found" });
+//   }
+
+//   try {
+//     const session = await mongoose.startSession();
+//     session.startTransaction();
+//     await post.remove({ session: session });  //remove doc; make sure we refer to the current session
+//     post.user.posts.pull(post);   //remove post id from the corresponding user
+//     await post.user.save({ session: session });    //save the updated user (part of our current session)
+//     await session.commitTransaction();
+//   } catch (err) {
+//     return console.log(err);
+//   }
+//   return res.status(200).json({ message: "Post deleted successfully" });
+// }
 
 const deletePost = async (req, res, nxt) => {
   const id = req.params.id;
-  let post;
+  // console.log(id);
   try {
-    post = await Post.findById(id).populate('user');
-    // if (post != null) {
-    // console.log(post.user);
-    // await post.user.posts.pull(post);
-    // }
-  } catch (err) {
-    console.log(err);
+    const response = await Post.findByIdAndRemove(id);
+    return res.status(200).json({ message: "Your Post has been deleted." });
+  } catch (error) {
+    return res.status(500).json({ errors: error, message: error.message });
   }
-  if (!post) {
-    res.status(404).json({ message: "Post not found" });
-  }
-
-  try {
-    const session = await mongoose.startSession();
-    session.startTransaction();
-    await post.remove({ session: session });  //remove doc; make sure we refer to the current session
-    post.user.posts.pull(post);   //remove post id from the corresponding user
-    await post.user.save({ session: session });    //save the updated user (part of our current session)
-    await session.commitTransaction();
-  } catch (err) {
-    return console.log(err);
-  }
-  return res.status(200).json({ message: "Post deleted successfully" });
-}
-
-
+};
 
 // getting all posts of user
 const getPostsByUserId = async (req, res, nxt) => {
   let userId = req.params.id;
   let userWithPosts;
   try {
-    userWithPosts = await Users.findById(userId).populate('posts');
+    userWithPosts = await Users.findById(userId).populate("posts");
   } catch (err) {
     return res.status(500).json({ msg: err.message, errors: err });
   }
   if (!userWithPosts || userWithPosts.posts.length === 0) {
-    return res.status(404).json({ message: "No post found for the provided user id" });
+    return res
+      .status(404)
+      .json({ message: "No post found for the provided user id" });
   }
   return res.status(200).json({ posts: userWithPosts });
-}
-
-
+};
 
 // -------------------------------------------------------------------------
 
@@ -270,14 +281,20 @@ const postComment = async (req, res, nxt) => {
       comment,
       userName,
     });
-    return res.status(200).json({ msg: 'Your comment has been published' });
+    return res.status(200).json({ msg: "Your comment has been published" });
   } catch (error) {
     return res.status(500).json({ errors: error, msg: error.message });
   }
-}
-
-
+};
 
 module.exports = {
-  getAllPost, createPost, updatePost, deletePost, postDetails, getPostsByUserId, createPost2, fetchPosts, postComment
-}
+  getAllPost,
+  createPost,
+  updatePost,
+  deletePost,
+  postDetails,
+  getPostsByUserId,
+  createPost2,
+  fetchPosts,
+  postComment,
+};
