@@ -121,7 +121,7 @@ export const postComment = (commentData) => {
     dispatch({ type: SET_LOADER });
     try {
       const { data } = await axios.post(
-        "/api/post/comment",
+        "/api/comment/comment",
         commentData,
         config
       );

@@ -2,11 +2,15 @@ const { check } = require('express-validator');
 const express = require('express');
 const router = express.Router();
 const commentController = require('../controllers/comment-controller');
-const { getCommentByPostId, createComment, updateComment } = commentController;
+const { getCommentByPostId, createComment, updateComment, postComment } = commentController;
+const auth = require("../middleware/auth");
 
-router.get('/:postId', getCommentByPostId);
-router.post('/', createComment);
-router.put('/:commentId', updateComment);
+// To comment in Post
+router.post("/comment", auth.protect, postComment);
+
+// Get all comments of post by post id
+// router.get('/:postId', getCommentByPostId);
+
 
 /*
 For Creating Comment Request like this

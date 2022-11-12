@@ -1,13 +1,25 @@
+const { validationResult } = require('express-validator');
 const Post = require("../models/Post");
 const HttpError = require('../models/http-error');
 const Users = require("../models/Users");
 const Comment = require('../models/Comment');
 const mongoose = require('mongoose');
-const { validationResult } = require('express-validator');
 
 
-
-// **********************************************************
+// To comment in Post
+const postComment = async (req, res, nxt) => {
+  const { id, comment, userName } = req.body;
+  try {
+    const response = await Comment.create({
+      postId: id,
+      comment,
+      userName,
+    });
+    return res.status(200).json({ msg: "Your comment has been published" });
+  } catch (error) {
+    return res.status(500).json({ errors: error, msg: error.message });
+  }
+};
 
 const getCommentByPostId = async (req, res, next) => {
   const { postId } = req.params;
@@ -25,9 +37,6 @@ const getCommentByPostId = async (req, res, next) => {
   res.json({ comments: comments.map((comment) => comment.toObject({ getters: true })), });
 }
 
-
-
-// ******************************************************
 
 const createComment = async (req, res, next) => {
   const errors = validationResult(req);
@@ -121,6 +130,6 @@ const updateComment = async (req, res, next) => {
 }
 
 module.exports = {
-  getCommentByPostId, createComment, updateComment
+  getCommentByPostId, createComment, updateComment, postComment
 }
 

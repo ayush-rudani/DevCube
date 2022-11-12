@@ -116,7 +116,7 @@ const createPost = async (req, res, nxt) => {
 };
 
 // fetch post by userId
-const fetchPosts = async (req, res, nxt) => {
+const getPostsByUserId = async (req, res, nxt) => {
   const uid = req.params.uid;
   const page = req.params.page;
   const perPage = 3;
@@ -176,39 +176,7 @@ const deletePost = async (req, res, nxt) => {
   }
 };
 
-// getting all posts of user
-const getPostsByUserId = async (req, res, nxt) => {
-  let userId = req.params.id;
-  let userWithPosts;
-  try {
-    userWithPosts = await Users.findById(userId).populate("posts");
-  } catch (err) {
-    return res.status(500).json({ msg: err.message, errors: err });
-  }
-  if (!userWithPosts || userWithPosts.posts.length === 0) {
-    return res
-      .status(404)
-      .json({ message: "No post found for the provided user id" });
-  }
-  return res.status(200).json({ posts: userWithPosts });
-};
 
-// -------------------------------------------------------------------------
-
-// Fetch all comments of a post
-const postComment = async (req, res, nxt) => {
-  const { id, comment, userName } = req.body;
-  try {
-    const response = await Comment.create({
-      postId: id,
-      comment,
-      userName,
-    });
-    return res.status(200).json({ msg: "Your comment has been published" });
-  } catch (error) {
-    return res.status(500).json({ errors: error, msg: error.message });
-  }
-};
 
 module.exports = {
   getAllPost,
@@ -217,6 +185,6 @@ module.exports = {
   deletePost,
   postDetails,
   getPostsByUserId,
-  fetchPosts,
-  postComment,
+  // fetchPosts,
+  // postComment,
 };
