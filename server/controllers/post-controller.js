@@ -81,6 +81,8 @@ const createPost = async (req, res, nxt) => {
     .json({ message: "Post created successfully", post: newPost });
 };
 
+
+
 const createPost2 = async (req, res, nxt) => {
   const form = formidable({ multiples: true });
 
@@ -127,17 +129,44 @@ const createPost2 = async (req, res, nxt) => {
         `../../../client/public/images/${files.image.originalFilename}`;
       fs.copyFile(files.image.filepath, newPath, async (error) => {
         if (!error) {
+
           // console.log('File uploaded successfully');
+          const newPost = new Post({
+            title,
+            body,
+            image: files.image.originalFilename,
+            userName: name,
+            user: id,
+            description,
+            slug
+          });
+
+          let existingUser;
           try {
-            const response = await Post.create({
-              title,
-              body,
-              image: files.image.originalFilename,
-              description,
-              slug,
-              userName: name,
-              user: id,
-            });
+            existingUser = await Users.findById(id);
+          } catch (err) {
+            return console.log(err);
+          }
+
+          try {
+            const session = await mongoose.startSession();
+            session.startTransaction();
+            await newPost.save({ session });
+            existingUser.posts.push(newPost);
+            await existingUser.save({ session });
+            await session.commitTransaction();
+
+            // const response = await Post.create({
+            //   title,
+            //   body,
+            //   image: files.image.originalFilename,
+            //   description,
+            //   slug,
+            //   userName: name,
+            //   user: id,
+            // });
+            
+            response = newPost;
             return res.status(200).json({
               msg: "Your post has been created successfully",
               response,
