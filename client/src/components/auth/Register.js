@@ -38,8 +38,6 @@ const Register = (props) => {
             registerError.map(error => toast.error(error.msg));
         }
         if (user) {
-            // props.history.push('/dashboard');
-            // props.navigate.push('/dashboard');
             navigate('/dashboard');
         }
     }, [registerError, user]);

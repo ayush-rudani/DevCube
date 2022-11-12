@@ -1,12 +1,13 @@
+const { check } = require('express-validator');
 const express = require('express');
 const router = express.Router();
-const { check } = require('express-validator');
 const commentController = require('../controllers/comment-controller');
 const { getCommentByPostId, createComment, updateComment } = commentController;
 
 router.get('/:postId', getCommentByPostId);
 router.post('/', createComment);
 router.put('/:commentId', updateComment);
+
 /*
 For Creating Comment Request like this
 {

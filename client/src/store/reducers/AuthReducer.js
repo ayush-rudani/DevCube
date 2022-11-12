@@ -16,10 +16,6 @@ const initialState = {
     user: '',
 }
 
-// const decodeToken = jwt_decode(token);
-// console.log(decodeToken); //    {userId: '6360a468e8f32ecf1372f338', iat: 1667277929, exp: 1669869929}
-
-
 const token = localStorage.getItem('jwtToken');
 
 const verifyToken = (token) => {
@@ -29,15 +25,9 @@ const verifyToken = (token) => {
         localStorage.removeItem('jwtToken');
         return null;
     }
-
     else {
         return decodeToken;
     }
-    // else {
-    //     initialState.token = token;
-    //     const { user } = decodeToken;
-    //     initialState.user = user;
-    // }
 }
 
 if (token) {

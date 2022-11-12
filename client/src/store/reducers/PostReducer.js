@@ -100,6 +100,7 @@ export const FetchPost = (state = initState, action) => {
 //         return state;
 //     }
 // };
+
 // export const UpdateImage = (state = initState, action) => {
 //     const { payload, type } = action;
 //     if (type === UPDATE_IMAGE_ERROR) {

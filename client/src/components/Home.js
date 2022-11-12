@@ -18,14 +18,9 @@ const Home = () => {
 	}
 	const { loading } = useSelector(state => state.PostReducer);
 	const { posts, count, perPage } = useSelector(state => state.FetchPosts);
-	// console.log(posts, page, count, perPage);
-
 	useEffect(() => {
 		dispatch(homePosts(page));
 	}, [page]);
-
-	// let text = htmlToFormattedText(posts[0].body.slice(0, 300));
-	// console.log(text);
 
 	return (
 		<>

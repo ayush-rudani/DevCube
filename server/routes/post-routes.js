@@ -15,7 +15,7 @@ router.get("/details/:id", postC.postDetails);
 
 router.post("/comment", auth.protect, postC.postComment);
 
-router.post("/new", auth.protect, postC.createPost2);
+router.post("/new", auth.protect, postC.createPost);
 router.put("/update/:id", postC.updatePost);
 router.delete("/delete/:id", auth.protect, postC.deletePost);
 router.get("/user/:id", postC.getPostsByUserId);

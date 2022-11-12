@@ -19,25 +19,6 @@ import {
   COMMENTS,
 } from "../types/PostTypes";
 
-// const token = localStorage.getItem('jwtToken');
-
-// export const createAction = (postData) => {
-//     return async (dispatch) => {
-//         try {
-//             const config = {
-//                 headers: {
-//                     Authorization: `Bearer ${token}`,
-//                 }
-//             };
-//             const { data } = await axios.post('/api/post/new', postData, config);
-//             console.log(data);
-//         } catch (error) {
-//             console.log(error.message);
-//             console.log(error.response);
-//         }
-
-//     }
-// }
 
 export const createAction = (postData) => {
   return async (dispatch, getState) => {
@@ -65,8 +46,6 @@ export const createAction = (postData) => {
       const { errors } = error.response.data;
       dispatch({ type: CLOSE_LOADER });
       dispatch({ type: CREATE_ERRORS, payload: errors });
-      // console.log(error.message);
-      // console.log(error.response.data);
     }
   };
 };

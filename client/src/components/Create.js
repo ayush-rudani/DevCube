@@ -79,9 +79,6 @@ function Create() {
         formData.append('name', name);
 
         dispatch(createAction(formData));
-        // console.log(state);
-        // console.log(slug);
-        // console.log(value);
     }
 
 
@@ -93,13 +90,6 @@ function Create() {
             createErrors.map(err => toast.error(err.msg));
         }
     }, [createErrors, redirect]);
-
-    // useEffect(() => {
-    //     <Helmet>
-    //         <title>Create new post</title>
-    //         <meta name='description' content='Create a new post' />
-    //     </Helmet>
-    // }, []);
 
     return (
         <div className="create mt-100">
