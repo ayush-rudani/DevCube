@@ -65,10 +65,13 @@ function Create() {
     }
 
 
+
+
     const createPost = async (e) => {
         e.preventDefault();
         const formData = new FormData();
         const { title, description, image } = state;
+
 
         formData.append('body', value);
         formData.append('title', title);
